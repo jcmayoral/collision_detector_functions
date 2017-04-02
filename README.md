@@ -1,1 +1,1 @@
-This package contains my persnal projects developed in a Raspbery PI board.
+This package contains my tutorials developed in a Raspbery PI board.
