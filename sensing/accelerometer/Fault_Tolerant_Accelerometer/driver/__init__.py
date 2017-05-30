@@ -1,1 +1,1 @@
-from .ADXL345 import *
+from .FaultAccelerometer import *
