@@ -51,12 +51,12 @@ class MathAccelerometer:
       likelihood,s_z = self.meanGaussianSequence(array, mean, var, e_mean)
       print ('Gaussian Probability Density Function ' , likelihood)
       print ('log-likelihood ratio', s_z)
-   
+
    def meanGaussianSequence(self,z, m1, v1, m0):
       likelihood = []
       s_z = []
       for i in range(0,3):
-         likelihood.append((np.power(-z[-1,i]- m1[i],2) + np.power(-z[-1,i]- m0[i],2))/(2*v1[i]))  
+         likelihood.append((np.power(-z[-1,i]- m1[i],2) + np.power(-z[-1,i]- m0[i],2))/(2*v1[i]))
          s_z.append(((m1[i]-m0[i]) /v1[i])* (z[-1,i] - ((m0[i]+m1[i])/2)))
 
       likelihood = np.exp(likelihood)
