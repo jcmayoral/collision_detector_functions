@@ -61,7 +61,7 @@ class MathAccelerometer:
       print ('log-likelihood ratio', s_z)
       self.cum_sum = np.sum([self.cum_sum,s_z],axis=0)
       print ('Cumulative ', self.cum_sum)
-      plt.scatter(filter(lambda x: x != float('inf'), likelihood[0,:]))
+      plt.plot(filter(lambda x: x != float('inf'), likelihood[0,:]))
       plt.show()
       plt.savefig('p1.png') 
   
