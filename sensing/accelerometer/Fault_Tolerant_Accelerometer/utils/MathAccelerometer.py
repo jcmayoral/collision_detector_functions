@@ -21,7 +21,7 @@ class MathAccelerometer:
 
    def plot(self):
       while True:
- 	 samples = []
+         samples = []
          for i in range(0,500):
              samples.append(self.accel.read())
          mean = self.mean(samples)
@@ -33,16 +33,15 @@ class MathAccelerometer:
       print ('time in seconds ', self.accel.get_data_rate())
       expected_mean = [2,2,]
       expected_variance = [1,1,1]
-      
-      while True:   	   
-         samples = []
-         timeout = time.time() + self.seconds / self.accel.get_data_rate()
-	 while time.time() < timeout:
-	    #print ('remaining ' , timeout - time.time())
-	     samples.append(self.accel.read())
-         mean = self.mean(samples)
-         variance = self.variance(samples)
-         self.CUSUM(samples,mean,variance, expected_mean, expected_variance)
+
+      while True:
+          samples = []
+          timeout = time.time() + self.seconds / self.accel.get_data_rate()
+          while time.time() < timeout:
+              samples.append(self.accel.read())
+          mean = self.mean(samples)
+          variance = self.variance(samples)
+          self.CUSUM(samples,mean,variance, expected_mean, expected_variance)
          #print('Mean Values X={0}, Y={1}, Z={2}'.format(mean[0], mean[1], mean[2]))
          #print('Variance Values X={0}, Y={1}, Z={2}'.format(variance[0], variance[1], variance[2]))
 
@@ -60,5 +59,5 @@ class MathAccelerometer:
          s_z.append(((m1[i]-m0[i]) /v1[i])* (z[-1,i] - ((m0[i]+m1[i])/2)))
 
       likelihood = np.exp(likelihood)
-      
+
       return likelihood, s_z
