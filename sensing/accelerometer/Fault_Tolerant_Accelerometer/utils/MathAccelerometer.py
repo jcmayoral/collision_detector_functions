@@ -2,7 +2,7 @@
 # Modified: Jose Carlos Mayoral
 # License: Public Domain
 import time
-import matplotlib 
+import matplotlib
 matplotlib.use('Agg')
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
@@ -37,40 +37,33 @@ class MathAccelerometer:
 
     def changeDetection(self):
         print ('time in seconds ', self.seconds)
-        expected_mean = [2,2,250]
-        expected_variance = [1,1,1]
+        expected_mean = np.array([2,2,250])
+        expected_variance = np.array([1,1,1])
 
-        while True:   	   
+        while True:
             samples = []
-            timeout = time.time() + self.seconds
+            #timeout = time.time() + self.seconds
             #timeout = datetime.now() + self.seconds / 1000
-            while time.time() < timeout:
+            #while time.time() < timeout:
 	        #print ('remaining ' , timeout - time.time())
-                samples.append(self.accel.read())
+            z_i = self.accel.read()
+            samples.append(z_i)
             mean = self.mean(samples)
             variance = self.variance(samples)
-            self.CUSUM(samples,mean,variance, expected_mean, expected_variance)
+            self.CUSUM(z_i,mean,variance, expected_mean, expected_variance)
             plt.plot(self.cum_sum)
             plt.show()
 
     def CUSUM(self, data, mean, var, e_mean, e_var):
         array = np.array(data)
-        likelihood,s_z = self.meanGaussianSequence(array, mean, var, e_mean)
-        likelihood = np.sum(likelihood,axis=1) #equation 7,4
-        s_z = np.sum(s_z,axis=1) #equation 7,4
-        print ('likelihood ratio ' , likelihood)
+        s_z = self.meanGaussianSequence(array, mean, var, e_mean)
         print ('log-likelihood ratio', s_z)
         self.cum_sum = np.sum([self.cum_sum,s_z],axis=0)
-        #print ('Cumulative ', self.cum_sum)
-        #plt.savefig('p1.png') 
-  
+        print ('Cumulative ', self.cum_sum)
+        #plt.savefig('p1.png')
+
     def meanGaussianSequence(self,z, m1, v1, m0):
-        likelihood_ratio = []
-        s_z = []
-
-        for i in range(0,3):
-            likelihood_ratio.append(-(np.power(z[:,i]- m1[i],2) + np.power(z[:,i]- m0[i],2))/(2*np.power(v1[i],2)))
-            s_z.append(((m1[i]-m0[i]) /v1[i])* (z[:,i] - ((m0[i]+m1[i])/2)))
-
-        #likelihood = np.exp(likelihood_ratio)
-        return likelihood_ratio, s_z
+        constants = (m0-m1)/np.power(v1,2)
+        m0m1 = (m0+m1)/2
+        s_z = constants * (z  - m0m1)
+        return s_z
