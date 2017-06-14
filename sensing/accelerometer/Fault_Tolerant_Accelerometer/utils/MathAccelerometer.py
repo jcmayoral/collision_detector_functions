@@ -40,6 +40,8 @@ class MathAccelerometer:
         expected_mean = np.array([2,2,250])
         expected_variance = np.array([1,1,1])
         samples = []
+        z_i = self.accel.read()
+        samples.append(z_i)
 
         while True:
 
