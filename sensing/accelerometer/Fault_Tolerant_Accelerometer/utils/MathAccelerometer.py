@@ -62,7 +62,7 @@ class MathAccelerometer:
         array = np.array(data)
         s_z = self.meanGaussianSequence(array, mean, var, e_mean)
         print ('log-likelihood ratio', s_z)
-        if not np.isinf(s_z.any()):
+        if not np.isinf(s_z).any():
             self.cum_sum = np.sum([self.cum_sum,s_z],axis=0)
         print ('Cumulative ', self.cum_sum)
         #plt.savefig('p1.png')
