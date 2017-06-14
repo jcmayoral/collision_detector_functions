@@ -6,6 +6,6 @@ import time
 import utils
 
 # Create an ADXL345 instance.
-accel = utils.MathAccelerometer(5) # seconds
+accel = utils.MathAccelerometer(1) # seconds
 #accel.plot()
 accel.changeDetection()
