@@ -35,7 +35,7 @@ class FaultAccelerometer(object):
     def __init__(self, address=ADXL345_ADDRESS, i2c=None, **kwargs):
         """Initialize the ADXL345 accelerometer using its I2C interface.
         """
-        # Setup I2C interface for the device.
+        #Setup I2C interface for the device.
         if i2c is None:
             import Adafruit_GPIO.I2C as I2C
             i2c = I2C
