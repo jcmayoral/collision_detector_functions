@@ -61,18 +61,17 @@ class MathAccelerometer:
         print ('log-likelihood ratio', s_z)
         self.cum_sum = np.sum([self.cum_sum,s_z],axis=0)
         print ('Cumulative ', self.cum_sum)
-        l = filter(lambda x: x != float('inf'), likelihood[0,:])
-        plt.plot(l/np.max(l))
+        plt.plot(likelihood)
         plt.show()
         plt.savefig('p1.png') 
   
     def meanGaussianSequence(self,z, m1, v1, m0):
-        likelihood = []
+        likelihood_ratio = []
         s_z = []
 
         for i in range(0,3):
-            likelihood.append((np.power(-(z[:,i]- m1[i]),2) + np.power((z[:,i]- m0[i]),2))/(2*v1[i]))
+            likelihood_ratio.append(-(np.power((z[:,i]- m1[i]),2) + np.power((z[:,i]- m0[i]),2))/(2*v1[i]))
             s_z.append(((m1[i]-m0[i]) /v1[i])* (z[-1,i] - ((m0[i]+m1[i])/2)))
 
-        likelihood = np.exp(likelihood)
-        return likelihood, s_z
+        likelihood = np.exp(likelihood_ratio)
+        return likelihood_ratio, s_z
