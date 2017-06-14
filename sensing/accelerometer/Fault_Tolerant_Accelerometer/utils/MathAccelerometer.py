@@ -39,9 +39,10 @@ class MathAccelerometer:
         print ('time in seconds ', self.seconds)
         expected_mean = np.array([2,2,250])
         expected_variance = np.array([1,1,1])
+        samples = []
 
         while True:
-            samples = []
+
             #timeout = time.time() + self.seconds
             #timeout = datetime.now() + self.seconds / 1000
             #while time.time() < timeout:
