@@ -4,6 +4,7 @@
 import time
 import matplotlib 
 matplotlib.use('Agg')
+import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 #from datetime import datetime
 import driver
@@ -61,7 +62,8 @@ class MathAccelerometer:
       print ('log-likelihood ratio', s_z)
       self.cum_sum = np.sum([self.cum_sum,s_z],axis=0)
       print ('Cumulative ', self.cum_sum)
-      plt.plot(filter(lambda x: x != float('inf'), likelihood[0,:]))
+      l = filter(lambda x: x != float('inf'), likelihood[0,:])
+      plt.plot(l/np.max(l))
       plt.show()
       plt.savefig('p1.png') 
   
