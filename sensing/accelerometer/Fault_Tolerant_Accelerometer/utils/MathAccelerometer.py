@@ -50,6 +50,7 @@ class MathAccelerometer:
             samples.append(z_i)
             mean = self.mean(samples)
             variance = self.variance(samples)
+            print (variance, "variance")
             self.CUSUM(z_i,mean,variance, expected_mean, expected_variance)
             plt.plot(self.cum_sum)
             plt.show()
