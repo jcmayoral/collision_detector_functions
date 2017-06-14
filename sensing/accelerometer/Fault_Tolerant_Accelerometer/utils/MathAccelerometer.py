@@ -27,7 +27,7 @@ class MathAccelerometer:
 
    def plot(self):
       while True:
- 	 samples = []
+         samples = []
          for i in range(0,500):
              samples.append(self.accel.read())
          mean = self.mean(samples)
@@ -77,4 +77,8 @@ class MathAccelerometer:
          s_z.append(((m1[i]-m0[i]) /v1[i])* (z[-1,i] - ((m0[i]+m1[i])/2)))
 
       likelihood = np.exp(likelihood)
+<<<<<<< HEAD
+=======
+
+>>>>>>> b385ab4078f549d4028f84c3ddd56b4de10d3615
       return likelihood, s_z
