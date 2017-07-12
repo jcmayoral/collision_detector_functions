@@ -7,14 +7,14 @@ matplotlib.use('Agg')
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 from datetime import datetime
-import driver
+import Adafruit_ADXL345
 import numpy as np
 
-class MathAccelerometer:
+class ChangeDetection:
 
     def __init__(self, seconds):
         #print("MathAccelerometer Constructor")
-        self.accel = driver.FaultAccelerometer()
+        self.accel = Adafruit_ADXL345.ADXL345()
         self.seconds = seconds
         self.cum_sum = np.array([0,0,0])
         #self.fig = plt.figure()
@@ -43,7 +43,7 @@ class MathAccelerometer:
         z_i = self.accel.read()
         samples.append(z_i)
         counter = 0
-	datetime.date.fromordinal(self.seconds)
+        ##datetime.date.fromordinal(self.seconds)
         
         while True:
 
