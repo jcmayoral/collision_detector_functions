@@ -7,17 +7,21 @@ matplotlib.use('Agg')
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 from datetime import datetime
-import Adafruit_ADXL345
 import numpy as np
 
 class ChangeDetection:
 
     def __init__(self, seconds):
         #print("MathAccelerometer Constructor")
-        self.accel = Adafruit_ADXL345.ADXL345()
         self.seconds = seconds
         self.cum_sum = np.array([0,0,0])
+        self.samples = []
         #self.fig = plt.figure()
+
+    def addData(self,data):
+        self.z_i = data
+        self.samples.append(self.z_i)
+        #self.changeDetection()
 
     def mean(self,data):
         return np.mean(data, axis=0)
@@ -25,43 +29,13 @@ class ChangeDetection:
     def variance(self,data):
         return np.var(data, axis=0)
 
-    def plot(self):
-        while True:
-            samples = []
-            for i in range(0,500):
-                samples.append(self.accel.read())
-            mean = self.mean(samples)
-            variance = self.variance(samples)
-            #print('Mean Values X={0}, Y={1}, Z={2}'.format(mean[0], mean[1], mean[2]))
-            #print('Variance Values X={0}, Y={1}, Z={2}'.format(variance[0], variance[1], variance[2]))
-
     def changeDetection(self):
         #print ('time in seconds ', self.seconds)
         expected_mean = np.array([2,2,250])
-        expected_variance = np.array([1,1,1])
-        samples = []
-        z_i = self.accel.read()
-        samples.append(z_i)
-        counter = 0
-        ##datetime.date.fromordinal(self.seconds)
-        
-        while True:
-
-            timeout = time.time() + self.seconds
-            while time.time() < timeout:
-                return (samples)
-	        #print ('remaining ' , timeout - time.time())
-            z_i = self.accel.read()
-            samples.append(z_i)
-            mean = self.mean(samples)
-            variance = self.variance(samples)
-            self.CUSUM(z_i,mean,variance, expected_mean, expected_variance)
-            
-                
-            #plt.plot([self.cum_sum,np.arange(0,len(self.cum_sum))])
-            #plt.show()
-            #counter = 0
-                
+        expected_variance = np.array([1,1,1])       
+        mean = self.mean(self.samples)
+        variance = self.variance(self.samples)
+        self.CUSUM(self.samples,mean,variance, expected_mean, expected_variance)
 
     def CUSUM(self, data, mean, var, e_mean, e_var):
         array = np.array(data)
