@@ -6,18 +6,18 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
-#from datetime import datetime
+from datetime import datetime
 import driver
 import numpy as np
 
 class MathAccelerometer:
 
     def __init__(self, seconds):
-        print("MathAccelerometer Constructor")
+        #print("MathAccelerometer Constructor")
         self.accel = driver.FaultAccelerometer()
         self.seconds = seconds
         self.cum_sum = np.array([0,0,0])
-        self.fig = plt.figure()
+        #self.fig = plt.figure()
 
     def mean(self,data):
         return np.mean(data, axis=0)
@@ -32,40 +32,43 @@ class MathAccelerometer:
                 samples.append(self.accel.read())
             mean = self.mean(samples)
             variance = self.variance(samples)
-            print('Mean Values X={0}, Y={1}, Z={2}'.format(mean[0], mean[1], mean[2]))
-            print('Variance Values X={0}, Y={1}, Z={2}'.format(variance[0], variance[1], variance[2]))
+            #print('Mean Values X={0}, Y={1}, Z={2}'.format(mean[0], mean[1], mean[2]))
+            #print('Variance Values X={0}, Y={1}, Z={2}'.format(variance[0], variance[1], variance[2]))
 
     def changeDetection(self):
-        print ('time in seconds ', self.seconds)
+        #print ('time in seconds ', self.seconds)
         expected_mean = np.array([2,2,250])
         expected_variance = np.array([1,1,1])
         samples = []
         z_i = self.accel.read()
         samples.append(z_i)
-
+        counter = 0
+	datetime.date.fromordinal(self.seconds)
+        
         while True:
 
-            #timeout = time.time() + self.seconds
-            #timeout = datetime.now() + self.seconds / 1000
-            #while time.time() < timeout:
+            timeout = time.time() + self.seconds
+            while time.time() < timeout:
+                return (samples)
 	        #print ('remaining ' , timeout - time.time())
             z_i = self.accel.read()
             samples.append(z_i)
             mean = self.mean(samples)
             variance = self.variance(samples)
-            print (variance, "variance")
             self.CUSUM(z_i,mean,variance, expected_mean, expected_variance)
-            plt.plot(self.cum_sum)
-            plt.show()
+            
+                
+            #plt.plot([self.cum_sum,np.arange(0,len(self.cum_sum))])
+            #plt.show()
+            #counter = 0
+                
 
     def CUSUM(self, data, mean, var, e_mean, e_var):
         array = np.array(data)
         s_z = self.meanGaussianSequence(array, mean, var, e_mean)
-        print ('log-likelihood ratio', s_z)
+
         if not np.isinf(s_z).any():
             self.cum_sum = np.sum([self.cum_sum,s_z],axis=0)
-        print ('Cumulative ', self.cum_sum)
-        #plt.savefig('p1.png')
 
     def meanGaussianSequence(self,z, m1, v1, m0):
         constants = (m0-m1)/np.power(v1,2)
