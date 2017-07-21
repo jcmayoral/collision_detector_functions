@@ -36,9 +36,9 @@ class ChangeDetection:
     def CUSUM(self, data, mean, var, e_mean, e_var):
         array = np.array(data)
         s_z = self.meanGaussianSequence(array, mean, var, e_mean)
-
         if not np.isinf(s_z).any():
-            self.cum_sum = np.sum([self.cum_sum,s_z],axis=0)
+            s_z_sum = np.sum(s_z,axis=0)
+            self.cum_sum = np.sum([self.cum_sum,s_z_sum],axis=0)
 
     def meanGaussianSequence(self,z, m1, v1, m0):
         constants = (m0-m1)/np.power(v1,2)
