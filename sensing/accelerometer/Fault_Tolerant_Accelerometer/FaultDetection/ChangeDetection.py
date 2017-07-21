@@ -2,10 +2,6 @@
 # Modified: Jose Carlos Mayoral
 # License: Public Domain
 import time
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.mlab as mlab
-import matplotlib.pyplot as plt
 from datetime import datetime
 import numpy as np
 
@@ -32,7 +28,7 @@ class ChangeDetection:
     def changeDetection(self):
         #print ('time in seconds ', self.seconds)
         expected_mean = np.array([2,2,250])
-        expected_variance = np.array([1,1,1])       
+        expected_variance = np.array([1,1,1])
         mean = self.mean(self.samples)
         variance = self.variance(self.samples)
         self.CUSUM(self.samples,mean,variance, expected_mean, expected_variance)
