@@ -9,9 +9,9 @@ class ChangeDetection:
 
     def __init__(self, seconds):
         self.seconds = seconds
-        self.cum_sum = np.array([0,0,0])
+        self.cum_sum = np.array([0.0,0.0,0.0])
         self.last_mean = np.array([20,20,20])
-        self.last_variance = np.array([1,1,1])
+        self.last_variance = np.array([10,10,10])
         self.samples = []
 
     def addData(self,data):
@@ -35,8 +35,7 @@ class ChangeDetection:
     def CUSUM(self, data, mean, var, e_mean, e_var):
         array = np.array(data)
         s_z_sum = self.meanGaussianSequence(array, mean, var, e_mean)
-        self.cum_sum = np.sum(s_z_sum, axis=0)
-        #self.cum_sum = np.sum([self.cum_sum,s_z_sum],axis=0)
+        self.current_cum = np.sum(s_z_sum, axis=0)
 
     def meanGaussianSequence(self,z, m1, v1, m0):
         constants = (m0-m1)/np.power(v1,2)
