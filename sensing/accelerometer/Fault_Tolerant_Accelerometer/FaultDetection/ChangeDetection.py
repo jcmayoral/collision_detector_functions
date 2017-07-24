@@ -11,6 +11,7 @@ class ChangeDetection:
         #print("MathAccelerometer Constructor")
         self.seconds = seconds
         self.cum_sum = np.array([0,0,0])
+        self.last_mean = np.array([0,0,0])
         self.samples = []
         #self.fig = plt.figure()
 
@@ -27,11 +28,12 @@ class ChangeDetection:
 
     def changeDetection(self):
         #print ('time in seconds ', self.seconds)
-        expected_mean = np.array([2,2,250])
+        expected_mean = self.last_mean
         expected_variance = np.array([1,1,1])
         mean = self.mean(self.samples)
         variance = self.variance(self.samples)
         self.CUSUM(self.samples,mean,variance, expected_mean, expected_variance)
+        self.last_mean = mean
 
     def CUSUM(self, data, mean, var, e_mean, e_var):
         array = np.array(data)
