@@ -34,12 +34,13 @@ class ChangeDetection:
 
     def CUSUM(self, data, mean, var, e_mean, e_var):
         array = np.array(data)
-        s_z_sum = self.meanGaussianSequence(array, mean, var, e_mean)
+        s_z_sum = self.meanChange(array, mean, var, e_mean)
         self.cum_sum = np.sum(s_z_sum, axis=0)
 
-    def meanGaussianSequence(self,z, m1, v1, m0):
-        s_z = (-np.power(z-m1,2) + np.power(z-m0,2))/(2*v1)
-
+    def meanChange(self,z, m1, v1, m0):
+        ### BLANKE
+        #s_z = (-np.power(z-m1,2) + np.power(z-m0,2))/(2*v1)
+        s_z = ((m1-m0)/v1) * (z-((m0+m1)/2))
         ##ORIGINAL
         #diff = (m0-m1)#/np.power(v1,2)
         #m0m1 = (m0+m1)/2
