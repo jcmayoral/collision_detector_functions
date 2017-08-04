@@ -10,8 +10,8 @@ class ChangeDetection:
     def __init__(self, seconds):
         self.seconds = seconds
         self.cum_sum = np.array([0.0,0.0,0.0])
-        self.last_mean = np.array([20,20,20])
-        self.last_variance = np.array([10,10,10])
+        self.last_mean = np.array([0,0,0])
+        self.last_variance = np.array([1,1,1])
         self.samples = []
 
     def addData(self,data):
