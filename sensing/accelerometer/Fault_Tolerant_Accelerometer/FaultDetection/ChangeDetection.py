@@ -34,7 +34,10 @@ class ChangeDetection:
 
     def CUSUM(self, data, mean, var, e_mean, e_var):
         array = np.array(data)
-        s_z_sum = self.meanChange(array, mean, var, e_mean)
+        #MEAN
+        #s_z_sum = self.meanChange(array, mean, var, e_mean)
+        #variance
+        s_z_sum = self.varianceChange(array, mean, var, e_var)
         self.cum_sum = np.sum(s_z_sum, axis=0)
 
     def meanChange(self,z, m1, v1, m0):
@@ -45,4 +48,13 @@ class ChangeDetection:
         #diff = (m0-m1)#/np.power(v1,2)
         #m0m1 = (m0+m1)/2
         #s_z = (z  - m0m1)/np.sqrt(v1)
+        return s_z
+
+    def varianceChange(self,z, m1, v1, v0):
+        ### BLANKE
+        #s_z = (-np.power(z-m1,2) + np.power(z-m0,2))/(2*v1)
+        std_0 = np.sqrt(v0)
+        std_1 = np.sqrt(v1)
+        diff = ((1/v0) - (1/v1))
+        s_z = np.log(std_0/std_1) + ((np.power(z-m1,2)/2) * diff)
         return s_z
