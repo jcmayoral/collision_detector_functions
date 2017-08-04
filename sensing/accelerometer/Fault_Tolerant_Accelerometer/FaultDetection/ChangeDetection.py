@@ -23,12 +23,12 @@ class ChangeDetection:
     def variance(self,data):
         return np.var(data, axis=0)
 
-    def changeDetection(self):
+    def changeDetection(self,limit):
         expected_mean = self.last_mean
         expected_variance = self.last_variance
-        mean = self.mean(self.samples)
-        variance = self.variance(self.samples)
-        self.CUSUM(self.samples,mean,variance, expected_mean, expected_variance)
+        mean = self.mean(self.samples[:limit])
+        variance = self.variance(self.samples[:limit])
+        self.CUSUM(self.samples[:limit],mean,variance, expected_mean, expected_variance)
         self.last_mean = mean
         self.last_variance = variance
 
@@ -38,7 +38,10 @@ class ChangeDetection:
         self.cum_sum = np.sum(s_z_sum, axis=0)
 
     def meanGaussianSequence(self,z, m1, v1, m0):
-        constants = (m0-m1)/np.power(v1,2)
-        m0m1 = (m0+m1)/2
-        s_z = constants * (z  - m0m1)
+        s_z = (-np.power(z-m1,2) + np.power(z-m0,2))/(2*v1)
+
+        ##ORIGINAL
+        #diff = (m0-m1)#/np.power(v1,2)
+        #m0m1 = (m0+m1)/2
+        #s_z = (z  - m0m1)/np.sqrt(v1)
         return s_z
