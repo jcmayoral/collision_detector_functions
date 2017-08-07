@@ -20,7 +20,7 @@ class RealTimePlotter:
             plt.legend(iter(plotObject), ('x', 'y', 'z'))
             plt.draw()
 
-        if len(x) is self.max_samples:
+        if len(x) >= self.max_samples:
             x.pop(0)
             y.pop(0)
             self.ax.cla()
