@@ -9,7 +9,7 @@ class GaussPlot:
     def __init__(self):
         print ("GaussiPlotter Constructor Initialized")
 
-    def call(self,data,mu,variance):
+    def call(self,mu,variance):
         sigma = np.sqrt(variance)
         #plotObject = self.ax.plot(data,mlab.normpdf(data, mu, sigma))
         #initialize a normal distribution with frozen in mean=-1, std. dev.= 1
