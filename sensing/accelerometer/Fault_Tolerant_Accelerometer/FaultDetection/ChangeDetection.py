@@ -32,12 +32,12 @@ class ChangeDetection:
         self.last_mean = mean
         self.last_variance = variance
 
-    def CUSUM(self, data, mean, var, e_mean, e_var):
+    def CUSUM(self, data, m1, v1, m0, v0):
         array = np.array(data)
         #MEAN
         #s_z_sum = self.meanChange(array, mean, var, e_mean)
         #variance
-        s_z_sum = self.varianceChange(array, mean, var, e_var)
+        s_z_sum = self.varianceChange(array, m1, v1, v0)
         self.cum_sum = np.sum(s_z_sum, axis=0)
 
     def meanChange(self,z, m1, v1, m0):
