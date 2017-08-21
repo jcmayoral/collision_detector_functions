@@ -3,8 +3,9 @@ matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
 class RealTimePlotter:
-    def __init__(self, max_samples = 1000, pace = 200):
+    def __init__(self, max_samples = 1000, pace = 200, enable_plot=True):
         self.max_samples = max_samples
+        self.enable_plot = enable_plot
         self.f = plt.figure()
         self.ax = plt.axes()
         self.ax.set_title('Results')
@@ -17,8 +18,11 @@ class RealTimePlotter:
     def update(self,seq,x,y):
         if seq % self.pace_ is 0:
             plotObject = self.ax.plot(x,y)
+
+        if self.enable_plot:
             plt.legend(iter(plotObject), ('x', 'y', 'z'))
-            plt.draw()
+
+        plt.draw()
 
         if len(x) >= self.max_samples:
             x.pop(0)
