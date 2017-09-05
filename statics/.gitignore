@@ -3,4 +3,4 @@ build/
 dist/
 ez_setup.pyc
  __pycache__/
-
+*.pyc
