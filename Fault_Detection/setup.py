@@ -17,11 +17,11 @@ classifiers = ['Development Status :: 4 - Beta',
                'Topic :: Software Development',
                'Topic :: System :: Hardware']
 
-setup(name              = 'Fault_Tolerant_Accelerometer',
+setup(name              = 'Thesis_packages',
       version           = '1.0.0',
       author            = 'Jose C Mayoral Banos',
       author_email      = 'jocamaba1989@gmail.com',
-      description       = 'Fault Tolerance Algorithms implemented on a I2C accelerometer in a Raspberry Pi',
+      description       = 'Python packages used for the master thesis of Jose Mayoral Banos',
       license           = 'none',
       classifiers       = classifiers,
       url               = 'https://github.com/adafruit/Adafruit_Python_ADXL345/',
