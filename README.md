@@ -13,6 +13,6 @@ Provides a library with custom functionalities used for ploting Stochastic Measu
 1. RealTimePlotter. A simple matplotlib interface to plot data on real time provided by a publisher.
 1. GaussianPlotter. A simple matplotlib interface to plot gaussian distribution over a window of measures.
 
-# Fault_Detection
+## Fault_Detection
 
 Provides change detection functionalities
