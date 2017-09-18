@@ -16,12 +16,15 @@ class RealTimePlotter:
 
 
     def update(self,seq,x,y):
+
+        plotObject = None
+
         if seq % self.pace_ is 0:
             plotObject = self.ax.plot(x,y)
 
-        if self.enable_plot:
+        if self.enable_plot and plotObject is not None:
             plt.legend(iter(plotObject), ('x', 'y', 'z'))
-
+        
         plt.draw()
 
         if len(x) >= self.max_samples:
