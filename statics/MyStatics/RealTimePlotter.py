@@ -21,13 +21,13 @@ class RealTimePlotter:
 
         if seq % self.pace_ is 0:
             plotObject = self.ax.plot(x,y)
+            plt.draw()
 
         if self.enable_plot and plotObject is not None:
             plt.legend(iter(plotObject), ('x', 'y', 'z'))
         
-        plt.draw()
 
         if len(x) >= self.max_samples:
             x.pop(0)
             y.pop(0)
-            self.ax.cla()
+            #self.ax.cla()
