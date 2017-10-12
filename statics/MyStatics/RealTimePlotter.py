@@ -25,9 +25,9 @@ class RealTimePlotter:
 
         if self.enable_plot and plotObject is not None:
             plt.legend(iter(plotObject), ('x', 'y', 'z'))
-        
+
 
         if len(x) >= self.max_samples:
             x.pop(0)
             y.pop(0)
-            #self.ax.cla()
+            self.ax.cla()
