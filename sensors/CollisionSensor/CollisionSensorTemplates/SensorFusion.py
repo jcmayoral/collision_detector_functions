@@ -14,11 +14,11 @@ from accelerometer_ros.cfg import accelerometerConfig
 
 
 class CollisionFusionSensor(ChangeDetection):
-    def __init__(self, window_size = 10, frame="base_link", sensor_id="accel1",
+    def __init__(self, number_elements = 3, window_size = 10, frame="base_link", sensor_id="accel1",
                        threshold = 60, node = "sensor_node", sensor_type = AccelStamped,
                        topic_name = "accel", sensor_number = 0, config_type = accelerometerConfig):
         self.setup(window_size, frame, threshold, sensor_id)
-        ChangeDetection.__init__(self)
+        ChangeDetection.__init__(self, number_elements)
         rospy.init_node(node, anonymous=False)
         rospy.Subscriber(topic_name, sensor_type, self.sensorCB)
         sensor_number = rospy.get_param("~sensor_number", 0)
@@ -44,7 +44,7 @@ class CollisionFusionSensor(ChangeDetection):
 
         if config["reset"]:
             self.clear_values()
-            config["rest"] = False
+            config["reset"] = False
         return config
 
     def updateData(self,msg): # To Override
