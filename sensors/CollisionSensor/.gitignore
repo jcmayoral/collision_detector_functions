@@ -1,0 +1,7 @@
+Collision_package.egg-info/
+/dist
+build/
+dist/
+ez_setup.pyc
+__pycache__/
+
