@@ -18,6 +18,16 @@ class ChangeDetection:
         self.samples = []
         self.s_z =[]
 
+    def clear_values(self):
+        self.cum_sum.clear()
+        #self.cum_sum = np.array([0.0,0.0,0.0])
+        self.last_mean.clear()
+        #self.last_mean = np.array([0,0,0])
+        self.last_variance.clear()
+        #self.last_variance = np.array([1,1,1])
+        self.samples.clear()
+        self.s_z.clear()
+
     def addData(self,data):
         self.samples.append(data)
 
