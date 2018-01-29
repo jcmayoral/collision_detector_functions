@@ -74,14 +74,10 @@ class CollisionFusionSensor(ChangeDetection):
 
         self.updateData(msg)
 
-        while (self.i< self.window_size):
-            self.addData(self.current_measure)
-            self.i = self.i+1
-            if len(self.samples) is self.window_size:
-                self.samples.pop(0)
-            return
+        self.addData(self.current_measure)
 
-        self.i=0
+        if ( len(self.samples) > self.window_size):
+            self.samples.pop(0)
 
         self.changeDetection(len(self.samples))
         cur = np.array(self.cum_sum, dtype = object)
