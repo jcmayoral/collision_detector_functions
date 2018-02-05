@@ -36,11 +36,14 @@ class CollisionFusionSensor(ChangeDetection):
         self.threshold = threshold
         self.sensor_id = sensor_id
         self.weight = 1.0
+        self.is_disable = False
+
 
     def dynamic_reconfigureCB(self,config, level):
         self.threshold = config["threshold"]
         self.window_size = config["window_size"]
         self.weight = config["weight"]
+        self.is_disable = config["is_disable"]
 
         if config["reset"]:
             self.clear_values()
@@ -81,6 +84,8 @@ class CollisionFusionSensor(ChangeDetection):
 
         self.changeDetection(len(self.samples))
         cur = np.array(self.cum_sum, dtype = object)
-        self.publishMsg(cur) # publishMsg
+
+        if not is_disable:
+            self.publishMsg(cur) # publishMsg
 
         self.doPostProcessing()
