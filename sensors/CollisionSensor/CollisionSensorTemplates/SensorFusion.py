@@ -20,9 +20,10 @@ class CollisionFusionSensor(ChangeDetection):
         self.setup(window_size, frame, threshold, sensor_id)
         ChangeDetection.__init__(self, number_elements)
         rospy.init_node(node, anonymous=False)
-        rospy.Subscriber(topic_name, sensor_type, self.sensorCB)
-        sensor_number = rospy.get_param("~sensor_number", 0)
+        self.sensor_number = rospy.get_param("~sensor_number", 0)
         self.sensor_id = rospy.get_param("~sensor_id", sensor_id)
+        self.subscriber_ = rospy.Subscriber(topic_name, sensor_type, self.sensorCB)
+
         self.pub = rospy.Publisher('collisions_'+ str(sensor_number), sensorFusionMsg, queue_size=10)
         self.dyn_reconfigure_srv = Server(config_type, self.dynamic_reconfigureCB)
         rospy.loginfo(sensor_id + " sensor Ready for Fusion")
@@ -38,12 +39,17 @@ class CollisionFusionSensor(ChangeDetection):
         self.weight = 1.0
         self.is_disable = False
 
+    def reset_subscriber(self):
+        self.subscriber_.shutdown()
+        self.subscriber_ = rospy.Subscriber(topic_name + str(self.sensor_number), sensor_type, self.sensorCB)
 
     def dynamic_reconfigureCB(self,config, level):
         self.threshold = config["threshold"]
         self.window_size = config["window_size"]
         self.weight = config["weight"]
         self.is_disable = config["is_disable"]
+        self.sensor_number = config["detector_id"]
+        self.reset_subscriber()
 
         if config["reset"]:
             self.clear_values()
