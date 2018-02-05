@@ -85,7 +85,7 @@ class CollisionFusionSensor(ChangeDetection):
         self.changeDetection(len(self.samples))
         cur = np.array(self.cum_sum, dtype = object)
 
-        if not is_disable:
+        if not self.is_disable:
             self.publishMsg(cur) # publishMsg
 
         self.doPostProcessing()
