@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import FaultDetection
 import numpy as np
 # Create an ADXL345 instance.
-accel = FaultDetection.ChangeDetection(10) # seconds
+accel = FaultDetection.ChangeDetection(3) # seconds
 #accel.plot()
 accel.addData([2.1,1,1])
 accel.addData([2.2,3,2])
