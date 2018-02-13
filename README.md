@@ -6,6 +6,9 @@ This package contains python libraries useful for the master thesis proposal of 
 
 This folder stands for sensors drivers.
 
+1. Adafruit_Python_ADXL345: Python driver for accelerometer model ADXL345 and arduino.
+1. CollisionSensorTemplates: Provides the interfacing for Collision Detection Observers.
+
 ## statics
 
 Provides a library with custom functionalities used for ploting Stochastic Measures.
@@ -15,4 +18,7 @@ Provides a library with custom functionalities used for ploting Stochastic Measu
 
 ## Fault_Detection
 
-Provides change detection functionalities
+Provides change detection functionalities.
+
+1. BMC_CUSUM a modification of the BMC libraries for ChangeDetection.
+1. ChangeDetection a CUSUM based algorithm for detecting changes
