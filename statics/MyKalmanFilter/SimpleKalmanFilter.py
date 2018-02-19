@@ -31,6 +31,9 @@ class SimpleKalmanFilter:
 	def getInnovationFunction(self):
 		return self.__y
 
+	def getEstimatedState(self):
+		return self.__x
+
 	def runFilter(self, Z):
 		self.__x = np.dot(self.__A,self.__x) # Prediction State
 		self.__P = np.dot(self.__A, np.dot(self.__P,self.__A.T)) + self.__Q # Predicted Covariance
