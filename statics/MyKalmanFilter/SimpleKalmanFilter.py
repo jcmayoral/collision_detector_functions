@@ -13,6 +13,9 @@ class SimpleKalmanFilter:
 		self.__I = np.eye(size)
 		self.__dt = dt
 
+	def setInitialState(self,initial_state):
+		self.__x = initial_state
+
 	def setTransitionMatrix(self, transition_matrix):
 		self.__A = transition_matrix
 
