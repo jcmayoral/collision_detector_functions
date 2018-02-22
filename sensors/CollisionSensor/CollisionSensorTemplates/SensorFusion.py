@@ -32,6 +32,7 @@ class CollisionFusionSensor(ChangeDetection):
     def setup(self, window_size, frame, threshold, sensor_id):
         self.i = 0
         self.msg = 0
+        self.is_over_lapping_required = False
         self.window_size = window_size
         self.frame = frame
         self.threshold = threshold
@@ -82,10 +83,25 @@ class CollisionFusionSensor(ChangeDetection):
 
         self.updateData(msg)
 
-        self.addData(self.current_measure)
+        #self.addData(self.current_measure)
 
-        if ( len(self.samples) > self.window_size):
-            self.samples.pop(0)
+        if self.is_over_lapping_required:
+
+            self.addData(self.current_measure)
+
+            if len(self.samples) > self.window_size:
+                self.samples.pop(0)
+
+        else:
+
+            if ( self.i < self.window_size) and len(self.samples) < self.window_size:
+                self.addData(self.current_measure)
+                self.i = self.i+1
+            else:
+                self.samples.pop(0)
+                return
+
+        self.i =0
 
         self.changeDetection(len(self.samples))
         cur = np.array(self.cum_sum, dtype = object)
