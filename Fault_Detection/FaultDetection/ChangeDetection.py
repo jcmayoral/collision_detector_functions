@@ -8,12 +8,12 @@ import numpy as np
 
 class ChangeDetection:
 
-    def __init__(self, length = 3):
-        self.cum_sum = np.zeros(length)
+    def __init__(self, length = 3, factor = 1):
+        self.cum_sum = np.zeros(length) * factor
         #self.cum_sum = np.array([0.0,0.0,0.0])
-        self.last_mean = np.ones(length)
+        self.last_mean = np.ones(length) * factor
         #self.last_mean = np.array([0,0,0])
-        self.last_variance = np.ones(length)
+        self.last_variance = np.ones(length) * factor
         #self.last_variance = np.array([1,1,1])
         self.samples = []
         self.s_z =[]
