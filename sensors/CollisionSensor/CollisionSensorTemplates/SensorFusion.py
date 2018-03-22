@@ -5,9 +5,6 @@ from sensor_msgs.msg import Imu
 from fusion_msgs.msg import sensorFusionMsg
 import numpy as np
 
-# For PCA
-from sklearn.decomposition import PCA
-
 #Dynamic Reconfigure
 from dynamic_reconfigure.server import Server
 from accelerometer_ros.cfg import accelerometerConfig
@@ -67,7 +64,6 @@ class CollisionFusionSensor(ChangeDetection):
         #Filling Message
         output_msg.header.frame_id = self.frame
         output_msg.window_size = self.window_size
-        #print ("Accelerations " , x,y,z)
 
         if any(t > self.threshold for t in data):
             output_msg.msg = sensorFusionMsg.ERROR

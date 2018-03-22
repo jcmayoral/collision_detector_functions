@@ -10,21 +10,15 @@ class ChangeDetection:
 
     def __init__(self, length = 3, factor = 1):
         self.cum_sum = np.zeros(length) * factor
-        #self.cum_sum = np.array([0.0,0.0,0.0])
         self.last_mean = np.ones(length) * factor
-        #self.last_mean = np.array([0,0,0])
         self.last_variance = np.ones(length) * factor
-        #self.last_variance = np.array([1,1,1])
         self.samples = []
         self.s_z =[]
 
     def clear_values(self):
         self.cum_sum.fill(0)
-        #self.cum_sum = np.array([0.0,0.0,0.0])
         self.last_mean.fill(1)
-        #self.last_mean = np.array([0,0,0])
         self.last_variance.fill(1)
-        #self.last_variance = np.array([1,1,1])
         self.samples = []
         self.s_z = []
 
@@ -58,10 +52,6 @@ class ChangeDetection:
         ### BLANKE
         #s_z = (-np.power(z-m1,2) + np.power(z-m0,2))/(2*v1)
         self.s_z = ((m1-m0)/v1) * (z-((m0+m1)/2))
-        ##ORIGINAL
-        #diff = (m0-m1)#/np.power(v1,2)
-        #m0m1 = (m0+m1)/2
-        #s_z = (z  - m0m1)/np.sqrt(v1)
 
     def varianceChange(self,z, m1, v1, v0):
         ### BLANKE
