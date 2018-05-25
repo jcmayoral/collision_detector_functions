@@ -20,12 +20,12 @@ class CollisionFusionSensor(ChangeDetection):
 
         self.dyn_reconfigure_srv = Server(config_type, self.dynamic_reconfigureCB)
 
-
         if rospy.has_param("~sensor_id"):
             self.sensor_id = rospy.get_param("~sensor_id", sensor_id)
         if rospy.has_param("~sensor_number"):
             self.pub.unregister()
             self.sensor_number = rospy.get_param("~sensor_number", 0)
+            self.reset_publisher()
         if rospy.has_param("~input_topic"):
             topic_name = rospy.get_param("~input_topic", "/imu/data")
 
