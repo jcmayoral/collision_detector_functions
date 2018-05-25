@@ -17,12 +17,20 @@ class CollisionFusionSensor(ChangeDetection):
         self.setup(window_size, frame, threshold, sensor_id)
         ChangeDetection.__init__(self, number_elements)
         rospy.init_node(node, anonymous=False)
-        self.sensor_number = rospy.get_param("~sensor_number", 0)
-        self.sensor_id = rospy.get_param("~sensor_id", sensor_id)
+
+        self.dyn_reconfigure_srv = Server(config_type, self.dynamic_reconfigureCB)
+
+
+        if rospy.has_param("~sensor_id"):
+            self.sensor_id = rospy.get_param("~sensor_id", sensor_id)
+        if rospy.has_param("~sensor_number"):
+            self.sensor_number = rospy.get_param("~sensor_number", 0)
+        if rospy.has_param("~input_topic"):
+            topic_name = rospy.get_param("~input_topic", "/imu/data")
+
         self.subscriber_ = rospy.Subscriber(topic_name, sensor_type, self.sensorCB)
 
-        self.pub = rospy.Publisher('collisions_'+ str(sensor_number), sensorFusionMsg, queue_size=10)
-        self.dyn_reconfigure_srv = Server(config_type, self.dynamic_reconfigureCB)
+        self.pub = rospy.Publisher('collisions_'+ str(self.sensor_number), sensorFusionMsg, queue_size=10)
         rospy.loginfo(sensor_id + " sensor Ready for Fusion")
         rospy.spin()
 
