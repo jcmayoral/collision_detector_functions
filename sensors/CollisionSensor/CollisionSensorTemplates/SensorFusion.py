@@ -17,8 +17,10 @@ class CollisionFusionSensor(ChangeDetection):
         self.setup(window_size, frame, threshold, sensor_id)
         ChangeDetection.__init__(self, number_elements)
         rospy.init_node(node, anonymous=False)
-
+        self._ready = False
         self.dyn_reconfigure_srv = Server(config_type, self.dynamic_reconfigureCB)
+
+        self.pub = rospy.Publisher('collisions_'+ str(self.sensor_number), sensorFusionMsg, queue_size=1)
 
         if rospy.has_param("~sensor_id"):
             self.sensor_id = rospy.get_param("~sensor_id", sensor_id)
@@ -31,8 +33,8 @@ class CollisionFusionSensor(ChangeDetection):
 
         self.subscriber_ = rospy.Subscriber(topic_name, sensor_type, self.sensorCB)
 
-        self.pub = rospy.Publisher('collisions_'+ str(self.sensor_number), sensorFusionMsg, queue_size=10)
         rospy.loginfo(sensor_id + " sensor Ready for Fusion")
+        self._ready = True
         rospy.spin()
 
     def setup(self, window_size, frame, threshold, sensor_id):
@@ -111,7 +113,7 @@ class CollisionFusionSensor(ChangeDetection):
         self.changeDetection(len(self.samples))
         cur = np.array(self.cum_sum, dtype = object)
 
-        if not self.is_disable:
+        if not self.is_disable and self._ready:
             self.publishMsg(cur) # publishMsg
 
         self.doPostProcessing()
